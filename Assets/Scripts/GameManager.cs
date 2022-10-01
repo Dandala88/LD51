@@ -38,7 +38,12 @@ public class GameManager : MonoBehaviour
         if(handling != null)
         {
             Vector3 worldPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cam.transform.position.z));
-            handling.transform.position = worldPosition;
+            float handlingX = Mathf.RoundToInt(worldPosition.x);
+            float handlingY = Mathf.RoundToInt(worldPosition.y);
+            float handlingZ = Mathf.RoundToInt(worldPosition.z);
+            //check for location being occupied
+            if(!Physics.Linecast(cam.transform.position, (new Vector3(handlingX, handlingY, handlingZ))))
+                handling.transform.position = new Vector3(handlingX, handlingY, handlingZ);
         }
     }
 
