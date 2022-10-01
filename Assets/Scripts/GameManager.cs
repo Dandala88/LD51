@@ -5,6 +5,13 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    public static int totalEnergy;
+
+    public delegate void EnergyChangeAction(int newValue);
+    public static event EnergyChangeAction OnEnergyChange;
+
+    [SerializeField]
+    private int startingEnergy;
     [SerializeField]
     private Camera cam;
     [SerializeField]
@@ -31,6 +38,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Physics.IgnoreLayerCollision(6, 6);
+
+        AddEnergy(startingEnergy);
     }
 
     private void Update()
@@ -38,12 +47,14 @@ public class GameManager : MonoBehaviour
         if(handling != null)
         {
             Vector3 worldPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cam.transform.position.z));
-            float handlingX = Mathf.RoundToInt(worldPosition.x);
-            float handlingY = Mathf.RoundToInt(worldPosition.y);
-            float handlingZ = Mathf.RoundToInt(worldPosition.z);
+            Vector3 handlingPos = IntPosition(worldPosition);
             //check for location being occupied
-            if(!Physics.Linecast(cam.transform.position, (new Vector3(handlingX, handlingY, handlingZ))))
-                handling.transform.position = new Vector3(handlingX, handlingY, handlingZ);
+            RaycastHit hit;
+            if (!Physics.Linecast(cam.transform.position, new Vector3(handlingPos.x, handlingPos.y, handlingPos.z), out hit))
+            {
+                if(hit.transform?.GetComponent<Modifier>() != handling)
+                    handling.transform.position = new Vector3(handlingPos.x, handlingPos.y, handlingPos.z);
+            }
         }
     }
 
@@ -57,6 +68,20 @@ public class GameManager : MonoBehaviour
         cam.transform.position += zMove + panMove;
     }
 
+    public static void AddEnergy(int val)
+    {
+        totalEnergy += val;
+        OnEnergyChange.Invoke(totalEnergy);
+    }
+
+    private Vector3 IntPosition(Vector3 position)
+    {
+        float roundX = Mathf.RoundToInt(position.x);
+        float roundY = Mathf.RoundToInt(position.y);
+        float roundZ = Mathf.RoundToInt(position.z);
+        return new Vector3(roundX, roundY, roundZ);
+    }
+
     public void Click(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -66,11 +91,19 @@ public class GameManager : MonoBehaviour
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
 
-            if(hit.transform?.GetComponent<ModifierSelector>() != null)
+            ModifierSelector selector;
+            if ((selector = hit.transform?.GetComponent<ModifierSelector>()) != null)
             {
-                Modifier clone = hit.transform.GetComponent<ModifierSelector>().Generate();
-                handling = clone;
-                handling.handled = true;
+                if (totalEnergy >= selector.cost)
+                {
+                    AddEnergy(-selector.cost);
+                    Vector3 worldPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cam.transform.position.z));
+                    Vector3 clonePos = IntPosition(worldPosition);
+                    Modifier clone = hit.transform.GetComponent<ModifierSelector>().Generate();
+                    clone.transform.position = clonePos;
+                    handling = clone;
+                    handling.handled = true;
+                }
             }
         }
 

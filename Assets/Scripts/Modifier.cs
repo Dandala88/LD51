@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Modifier : MonoBehaviour
 {
+    [HideInInspector]
     public bool handled;
 
     protected Energy energyPrefab;
