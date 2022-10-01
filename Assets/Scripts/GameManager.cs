@@ -32,10 +32,12 @@ public class GameManager : MonoBehaviour
     private Modifier handling;
     private Vector3 panInput;
     private Vector3 zoomInput;
+    private Gridifier gridifier;
 
     private void Awake()
     {
         energy = energyPrefab;
+        gridifier = GetComponent<Gridifier>();
     }
 
     private void Start()
@@ -50,16 +52,19 @@ public class GameManager : MonoBehaviour
         debugText.text = totalEnergy.ToString();
         if (handling != null)
         {
+            gridifier.Activate(true);
             Vector3 worldPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cam.transform.position.z));
             Vector3 handlingPos = IntPosition(worldPosition);
             //check for location being occupied
             RaycastHit hit;
             if (!Physics.Linecast(cam.transform.position, new Vector3(handlingPos.x, handlingPos.y, handlingPos.z), out hit))
             {
-                if(hit.transform?.GetComponent<Modifier>() != handling)
+                if (hit.transform?.GetComponent<Modifier>() != handling)
                     handling.transform.position = new Vector3(handlingPos.x, handlingPos.y, handlingPos.z);
             }
         }
+        else
+            gridifier.Activate(false);
     }
 
     private void LateUpdate()
