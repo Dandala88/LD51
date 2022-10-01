@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ModifierSelector : MonoBehaviour
 {
-
+    [HideInInspector]
     public int cost;
 
     [SerializeField]
@@ -13,6 +13,11 @@ public class ModifierSelector : MonoBehaviour
     private Material availableMaterial;
     [SerializeField]
     private Material unavailableMaterial;
+
+    private void Awake()
+    {
+        cost = prefab.cost;
+    }
 
     private void OnEnable()
     {

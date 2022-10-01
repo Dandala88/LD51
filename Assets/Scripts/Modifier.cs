@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Modifier : MonoBehaviour
 {
+    public int cost;
+
     [HideInInspector]
     public bool handled;
+
+    public bool handleable;
+
 
     protected Energy energyPrefab;
 

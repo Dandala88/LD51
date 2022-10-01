@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public Text debugText;
+
     public static int totalEnergy;
 
     public delegate void EnergyChangeAction(int newValue);
@@ -44,7 +47,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(handling != null)
+        debugText.text = totalEnergy.ToString();
+        if (handling != null)
         {
             Vector3 worldPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cam.transform.position.z));
             Vector3 handlingPos = IntPosition(worldPosition);
@@ -91,6 +95,7 @@ public class GameManager : MonoBehaviour
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
 
+            Modifier inPlayModifier;
             ModifierSelector selector;
             if ((selector = hit.transform?.GetComponent<ModifierSelector>()) != null)
             {
@@ -103,6 +108,21 @@ public class GameManager : MonoBehaviour
                     clone.transform.position = clonePos;
                     handling = clone;
                     handling.handled = true;
+                }
+            }
+            else if((inPlayModifier = hit.transform?.GetComponent<Modifier>()) != null)
+            {
+                if (inPlayModifier.handleable)
+                {
+                    int cost = Mathf.Max(Mathf.RoundToInt(inPlayModifier.cost / 2), 1);
+                    if (totalEnergy >= cost)
+                    {
+                        AddEnergy(-cost);
+                        Vector3 worldPosition = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -cam.transform.position.z));
+                        inPlayModifier.transform.position = IntPosition(worldPosition);
+                        handling = inPlayModifier;
+                        handling.handled = true;
+                    }
                 }
             }
         }
