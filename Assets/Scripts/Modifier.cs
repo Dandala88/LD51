@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Modifier : MonoBehaviour
 {
+    public bool handled;
+
     protected Energy energyPrefab;
 
     protected List<int> modified = new List<int>();
@@ -15,22 +17,28 @@ public class Modifier : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        int otherId = other.GetInstanceID();
-
-        if (other.CompareTag("Energy") && !modified.Contains(otherId))
+        if (!handled)
         {
-            modified.Add(otherId);
-            Triggered(other.transform, GetSideOfTrigger(other.transform.position));
+            int otherId = other.GetInstanceID();
+
+            if (other.CompareTag("Energy") && !modified.Contains(otherId))
+            {
+                modified.Add(otherId);
+                Triggered(other.transform, GetSideOfTrigger(other.transform.position));
+            }
         }
     }
 
     public void OnTriggerExit(Collider other)
     {
-        int otherId = other.GetInstanceID();
-
-        if (modified.Contains(otherId))
+        if (!handled)
         {
-            modified.Remove(otherId);
+            int otherId = other.GetInstanceID();
+
+            if (modified.Contains(otherId))
+            {
+                modified.Remove(otherId);
+            }
         }
     }
 
