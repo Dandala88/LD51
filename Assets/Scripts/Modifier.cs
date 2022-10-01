@@ -46,6 +46,12 @@ public class Modifier : MonoBehaviour
         return clone;
     }
 
+    protected void ModDestroy(Transform other)
+    {
+        modified.Remove(other.GetComponent<Collider>().GetInstanceID());
+        Destroy(other.gameObject);
+    }
+
     protected Vector3 GetSideOfTrigger(Vector3 other)
     {
         float yVal = other.y - transform.position.y;
