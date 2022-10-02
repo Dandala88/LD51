@@ -8,6 +8,17 @@ public class Generator : MonoBehaviour
     private Energy prefabBlock;
     [SerializeField]
     private Vector3 direction;
+    [SerializeField]
+    private AudioClip generateAudioClip;
+    
+    private Animator animator;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
@@ -19,8 +30,10 @@ public class Generator : MonoBehaviour
         Energy clone = Instantiate(prefabBlock);
         clone.transform.position = transform.position;
         clone.NewDirection(direction);
-
+        animator.Play("Generate", 0);
+        audioSource.PlayOneShot(generateAudioClip);
         yield return new WaitForSeconds(10);
         StartCoroutine(GenBlockCoroutine());
     }
+
 }
