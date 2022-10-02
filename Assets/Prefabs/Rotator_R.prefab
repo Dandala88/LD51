@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 700e9586ba00d84489d985d8b96a26c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 2
+  cost: 3
   handled: 0
   handleable: 1
   rotation: {x: 0, y: 0, z: 90}

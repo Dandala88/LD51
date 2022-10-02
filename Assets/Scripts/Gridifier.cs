@@ -20,6 +20,7 @@ public class Gridifier : MonoBehaviour
             for(int j = -height/2; j < height/2; j++)
             {
                 GameObject newCenter = Instantiate(center);
+                newCenter.transform.parent = gameObject.transform;
                 center.transform.position = new Vector3(i, j, 0f);
                 centers.Add(newCenter);
                 newCenter.SetActive(false);

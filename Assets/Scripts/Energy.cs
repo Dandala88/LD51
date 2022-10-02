@@ -6,6 +6,7 @@ public class Energy : MonoBehaviour
 {
 
     public float moveSpeed;
+    public State state;
 
     public enum State
     {
@@ -50,13 +51,22 @@ public class Energy : MonoBehaviour
         rb.velocity = direction * moveSpeed * speedModifier;
     }
 
-    public void ChangeState(State state)
+    public void ChangeState(State sentState)
     {
-        switch(state)
+        switch(sentState)
         {
-            case State.Normal: rend.material = normalMaterial; break;
-            case State.Fast: rend.material = fastMaterial; break;
-            case State.Slow: rend.material = slowMaterial; break;
+            case State.Normal: 
+                rend.material = normalMaterial;
+                state = State.Normal;
+                break;
+            case State.Fast: 
+                rend.material = fastMaterial;
+                state = State.Fast;
+                break;
+            case State.Slow: 
+                rend.material = slowMaterial;
+                state = State.Slow;
+                break;
         }
     }
 }

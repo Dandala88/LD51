@@ -50,8 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  state: 0
   normalMaterial: {fileID: 2100000, guid: 9c8c837314bfeff48bcdda7c34bf1da4, type: 2}
   fastMaterial: {fileID: 2100000, guid: f1749f9311822ab4b8072548a7f51ecb, type: 2}
+  slowMaterial: {fileID: 2100000, guid: 7a5ae5367992c474c9c136aee6bdda5c, type: 2}
 --- !u!33 &2631861924205538956
 MeshFilter:
   m_ObjectHideFlags: 0

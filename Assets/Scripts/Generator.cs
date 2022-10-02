@@ -5,6 +5,8 @@ using UnityEngine;
 public class Generator : MonoBehaviour
 {
     [SerializeField]
+    private float thisShouldBeTenSeconds = 10;
+    [SerializeField]
     private Energy prefabBlock;
     [SerializeField]
     private Vector3 direction;
@@ -32,7 +34,7 @@ public class Generator : MonoBehaviour
         clone.NewDirection(direction);
         animator.Play("Generate", 0);
         audioSource.PlayOneShot(generateAudioClip);
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSecondsRealtime(thisShouldBeTenSeconds);
         StartCoroutine(GenBlockCoroutine());
     }
 

@@ -29,7 +29,9 @@ public class Modifier : MonoBehaviour
 
             if (other.CompareTag("Energy") && !modified.Contains(otherId))
             {
-                other.GetComponent<Energy>().ChangeState(Energy.State.Normal);
+                if(gameObject.GetComponent<Destroyer>() == null)
+                    other.GetComponent<Energy>().ChangeState(Energy.State.Normal);
+
                 Swinger swinger;
                 if((swinger = other.GetComponentInParent<Swinger>()) != null)
                     swinger.Release(other.GetComponent<Energy>(), GetSideOfTrigger(other.transform.position));
