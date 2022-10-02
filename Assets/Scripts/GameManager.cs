@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
                     clone.transform.position = clonePos;
                     handling = clone;
                     handling.handled = true;
-                    audioSource.PlayOneShot(modifierManip);
+                    audioSource.PlayOneShot(modifierManip, 2f);
                 }
                 else
                 {
@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
                         inPlayModifier.transform.position = IntPosition(worldPosition);
                         handling = inPlayModifier;
                         handling.handled = true;
-                        audioSource.PlayOneShot(modifierManip);
+                        audioSource.PlayOneShot(modifierManip, 2f);
                     }
                     else
                     {
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
             {
                 handling.handled = false;
                 handling = null;
-                audioSource.PlayOneShot(modifierManip);
+                audioSource.PlayOneShot(modifierManip, 2f);
             }
         }
     }
@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
                     int cost = Mathf.Max(Mathf.RoundToInt(inPlayModifier.cost / 2), 1);
                     AddEnergy(cost);
                     Destroy(inPlayModifier.gameObject);
-                    audioSource.PlayOneShot(modifierManip);
+                    audioSource.PlayOneShot(modifierManip, 2f);
                 }
             }
         }

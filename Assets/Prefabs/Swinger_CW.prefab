@@ -48,9 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d171f9373df244ca8b336d747aded2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 30
+  cost: 75
   handled: 0
   handleable: 1
+  onlyOnce: 0
 --- !u!33 &1768316551756814152
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class Modifier : MonoBehaviour
     public bool handled;
 
     public bool handleable;
+    public bool onlyOnce;
 
 
     protected Energy energyPrefab;
@@ -48,7 +49,7 @@ public class Modifier : MonoBehaviour
         {
             int otherId = other.GetInstanceID();
 
-            if (modified.Contains(otherId))
+            if (modified.Contains(otherId) && !onlyOnce)
             {
                 modified.Remove(otherId);
             }
