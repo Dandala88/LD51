@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     private float camZoomSpeed;
     [SerializeField]
     private float maxCamZ;
+    [SerializeField]
+    private AudioClip noClip;
+    [SerializeField]
+    private AudioClip modifierManip;
 
     [SerializeField]
     private Energy energyPrefab;
@@ -33,11 +37,13 @@ public class GameManager : MonoBehaviour
     private Vector3 panInput;
     private Vector3 zoomInput;
     private Gridifier gridifier;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         energy = energyPrefab;
         gridifier = GetComponent<Gridifier>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -113,6 +119,11 @@ public class GameManager : MonoBehaviour
                     clone.transform.position = clonePos;
                     handling = clone;
                     handling.handled = true;
+                    audioSource.PlayOneShot(modifierManip);
+                }
+                else
+                {
+                    audioSource.PlayOneShot(noClip);
                 }
             }
             else if((inPlayModifier = hit.transform?.GetComponent<Modifier>()) != null)
@@ -127,6 +138,11 @@ public class GameManager : MonoBehaviour
                         inPlayModifier.transform.position = IntPosition(worldPosition);
                         handling = inPlayModifier;
                         handling.handled = true;
+                        audioSource.PlayOneShot(modifierManip);
+                    }
+                    else
+                    {
+                        audioSource.PlayOneShot(noClip);
                     }
                 }
             }
@@ -138,6 +154,7 @@ public class GameManager : MonoBehaviour
             {
                 handling.handled = false;
                 handling = null;
+                audioSource.PlayOneShot(modifierManip);
             }
         }
     }
