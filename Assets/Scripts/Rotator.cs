@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Rotator : Modifier
 {
+    [SerializeField]
+    private Vector3 rotation;
+
     protected override void Triggered(Transform other, Vector3 triggerDirection)
     {
         other.transform.position = transform.position;
-        other.GetComponent<Energy>().NewDirection(Quaternion.Euler(new Vector3(0f, 0f, 90f)) * triggerDirection);
+        other.GetComponent<Energy>().NewDirection(Quaternion.Euler(rotation) * triggerDirection);
     }
 }
