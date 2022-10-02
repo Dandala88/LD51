@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3295448941211620340}
   - component: {fileID: 4697837039407123056}
   m_Layer: 0
-  m_Name: Speeder
+  m_Name: Slower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
   cost: 10
   handled: 0
   handleable: 1
-  speedFactor: 3
+  speedFactor: 0.25
 --- !u!33 &1879147626303331422
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -80,7 +80,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5253d4c8d75b6eb41bc8c38aeb240cc0, type: 2}
+  - {fileID: 2100000, guid: 85437871632085c45a4ccfaa5a1650ac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,7 +125,7 @@ Animator:
   m_GameObject: {fileID: 2805771114468034881}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1016af7adb807bb4dacb4454cbcccb7b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9d05442b83d332242a7ec73a9953355c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

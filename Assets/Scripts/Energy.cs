@@ -10,12 +10,15 @@ public class Energy : MonoBehaviour
     public enum State
     {
         Normal,
-        Fast
+        Fast,
+        Slow
     }
     [SerializeField]
     private Material normalMaterial;
     [SerializeField]
     private Material fastMaterial;
+    [SerializeField]
+    private Material slowMaterial;
 
     private Vector3 direction;
 
@@ -53,6 +56,7 @@ public class Energy : MonoBehaviour
         {
             case State.Normal: rend.material = normalMaterial; break;
             case State.Fast: rend.material = fastMaterial; break;
+            case State.Slow: rend.material = slowMaterial; break;
         }
     }
 }
