@@ -159,6 +159,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RClick(InputAction.CallbackContext context)
+    {
+        if(context.canceled)
+        {
+            Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1f));
+            Debug.DrawRay(ray.origin, ray.direction * 1000, Color.cyan, 3);
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit);
+            Modifier inPlayModifier;
+            if ((inPlayModifier = hit.transform?.GetComponent<Modifier>()) != null)
+            {
+                if (inPlayModifier.handleable)
+                {
+                    int cost = Mathf.Max(Mathf.RoundToInt(inPlayModifier.cost / 2), 1);
+                    AddEnergy(cost);
+                    Destroy(inPlayModifier.gameObject);
+                    audioSource.PlayOneShot(modifierManip);
+                }
+            }
+        }
+    }
+
     public void Pan(InputAction.CallbackContext context)
     {
         if(context.performed)
